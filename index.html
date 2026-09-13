@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediWaste AI Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">✚</div>
+        <div>
+          <h1>MediWaste AI</h1>
+          <span>Smart Waste Management</span>
+        </div>
+      </div>
+
+      <nav>
+        <button class="nav-item active" data-page="dashboard">⌂ <span>Dashboard</span></button>
+        <button class="nav-item" data-page="scanner">◉ <span>AI Scanner</span></button>
+        <button class="nav-item" data-page="collection">▣ <span>Collection</span></button>
+        <button class="nav-item" data-page="analytics">◒ <span>Analytics</span></button>
+        <button class="nav-item" data-page="alerts">⚠ <span>Alerts</span></button>
+        <button class="nav-item" data-page="settings">⚙ <span>Settings</span></button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-dot"></div>
+        <div><strong>System Online</strong><small>All services operational</small></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">HOSPITAL WASTE MANAGEMENT</div>
+          <h2 id="pageTitle">Smart Medical Waste Monitoring</h2>
+        </div>
+        <div class="profile">
+          <div class="online"><span></span> Online</div>
+          <div class="avatar">A</div>
+          <div><strong>Admin</strong><small>Hospital Operations</small></div>
+        </div>
+      </header>
+
+      <section id="dashboard" class="page active-page">
+        <div class="cards">
+          <div class="stat-card">
+            <div class="stat-icon blue">◎</div>
+            <div><span>Waste Detected</span><strong id="detectedCount">128</strong><small>+12% this week</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">✓</div>
+            <div><span>Collected Today</span><strong>96</strong><small>84% collection rate</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon purple">◉</div>
+            <div><span>Robot Status</span><strong class="status-text">Active</strong><small>Battery 78%</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">♙</div>
+            <div><span>Active Alerts</span><strong id="alertCount">2</strong><small>Needs attention</small></div>
+          </div>
+        </div>
+
+        <div class="grid-two">
+          <div class="panel scanner-panel">
+            <div class="panel-head">
+              <div><h3>AI Camera Scanner</h3><span>Live detection</span></div>
+              <span class="live"><i></i> LIVE</span>
+            </div>
+           <div class="camera" id="cameraContainer">
+              <div class="scan-corner tl"></div><div class="scan-corner tr"></div>
+              <div class="scan-corner bl"></div><div class="scan-corner br"></div>
+              <div class="camera-center">
+                <div class="camera-icon">⌾</div>
+                <strong id="cameraText">Camera Ready</strong>
+                <small>Click “Start Scanner” to begin detection</small>
+              </div>
+              <div class="detection-box hidden" id="detectionBox">
+                <span id="detectedLabel">Glove</span>
+                <b id="confidence">94%</b>
+              </div>
+            </div>
+            <div class="scanner-result">
+              <div>
+                <span>Latest Detection</span>
+                <strong id="latestWaste">No detection yet</strong>
+              </div>
+              <div class="destination" id="destination">Waiting...</div>
+            </div>
+            <button class="primary-btn" id="scannerBtn">Start Scanner</button>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div><h3>Waste Distribution</h3><span>Today's overview</span></div>
+            </div>
+            <div class="donut-wrap">
+              <div class="donut"><div><strong>128</strong><span>Items</span></div></div>
+              <div class="legend">
+                <div><i class="dot infectious"></i><span>Infectious</span><b>45%</b></div>
+                <div><i class="dot sharps"></i><span>Sharps</span><b>30%</b></div>
+                <div><i class="dot pharma"></i><span>Pharmaceutical</span><b>15%</b></div>
+                <div><i class="dot other"></i><span>Other</span><b>10%</b></div>
+              </div>
+            </div>
+            <div class="mini-note">AI classification accuracy <strong>94.6%</strong></div>
+          </div>
+        </div>
+
+        <div class="panel bin-panel">
+          <div class="panel-head">
+            <div><h3>Bin Status</h3><span>Live compartment capacity</span></div>
+            <button class="text-btn" id="refreshBins">↻ Refresh</button>
+          </div>
+          <div class="bins">
+            <div class="bin">
+              <div class="bin-top"><span><b>Bin 01</b> Infectious Waste</span><strong>90%</strong></div>
+              <div class="progress"><span style="width:90%"></span></div>
+              <small class="warning">⚠ Almost full — collection required</small>
+            </div>
+            <div class="bin">
+              <div class="bin-top"><span><b>Bin 02</b> Sharps</span><strong>60%</strong></div>
+              <div class="progress"><span style="width:60%"></span></div>
+              <small>Capacity available</small>
+            </div>
+            <div class="bin">
+              <div class="bin-top"><span><b>Bin 03</b> Pharmaceutical</span><strong>30%</strong></div>
+              <div class="progress"><span style="width:30%"></span></div>
+              <small>Capacity available</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div><h3>Recent Collections</h3><span>Latest waste records</span></div>
+            <button class="text-btn" id="addDemo">+ Add Demo Record</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Waste ID</th><th>Waste Type</th><th>Category</th><th>Location</th><th>Time</th><th>Status</th></tr></thead>
+              <tbody id="records">
+                <tr><td>MW-0128</td><td>Glove</td><td><span class="pill infectious-pill">Infectious</span></td><td>ICU</td><td>10:42 AM</td><td><span class="done">● Collected</span></td></tr>
+                <tr><td>MW-0127</td><td>Syringe</td><td><span class="pill sharps-pill">Sharps</span></td><td>Ward 2</td><td>10:35 AM</td><td><span class="done">● Collected</span></td></tr>
+                <tr><td>MW-0126</td><td>Medicine Bottle</td><td><span class="pill pharma-pill">Pharmaceutical</span></td><td>Pharmacy</td><td>10:21 AM</td><td><span class="done">● Collected</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="scanner" class="page">
+        <div class="page-card">
+          <h3>AI Scanner</h3>
+          <p>Prototype screen for laptop-camera-based biomedical waste detection.</p>
+          <div class="big-scanner">
+            <div class="camera-center"><div class="camera-icon">⌾</div><strong>AI Vision Scanner</strong><small>YOLO + OpenCV integration point</small></div>
+          </div>
+          <button class="primary-btn" onclick="document.getElementById('scannerBtn').click(); showPage('dashboard')">Run Demo Detection</button>
+        </div>
+      </section>
+
+      <section id="collection" class="page">
+        <div class="page-card"><h3>Collection Management</h3><p>Track waste collection events, locations, timestamps and destination compartments.</p><div class="feature-list"><div>✓ Waste identification</div><div>✓ Collection history</div><div>✓ Compartment assignment</div><div>✓ Digital traceability</div></div></div>
+      </section>
+
+      <section id="analytics" class="page">
+        <div class="page-card"><h3>Analytics</h3><p>Monitor waste trends and AI classification performance.</p><div class="analytics-bars"><div><span>Mon</span><i style="height:55%"></i></div><div><span>Tue</span><i style="height:70%"></i></div><div><span>Wed</span><i style="height:45%"></i></div><div><span>Thu</span><i style="height:80%"></i></div><div><span>Fri</span><i style="height:65%"></i></div><div><span>Sat</span><i style="height:90%"></i></div></div></div>
+      </section>
+
+      <section id="alerts" class="page">
+        <div class="page-card"><h3>Alerts</h3><div class="alert-card danger">⚠ <div><strong>Bin 01 is 90% full</strong><small>Infectious waste compartment requires collection.</small></div></div><div class="alert-card warning">● <div><strong>Routine system check</strong><small>All sensors are responding normally.</small></div></div></div>
+      </section>
+
+      <section id="settings" class="page">
+        <div class="page-card"><h3>Settings</h3><p>Prototype settings for hospital administrators.</p><label class="toggle-row">Enable AI detection <input type="checkbox" checked><span></span></label><label class="toggle-row">Real-time alerts <input type="checkbox" checked><span></span></label></div>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
